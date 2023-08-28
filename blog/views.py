@@ -20,3 +20,5 @@ def post_details(request, pk):
     }
     return render(request, "post_details.html", context)
     
+
+#Hello My group
