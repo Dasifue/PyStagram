@@ -3,7 +3,9 @@
 
 {% block content %}
 
+{% if post.image %}
 <img src="{{post.image.url}}" alt="">
+{% endif %}
 
 <h2>{{post.owner.username}} - {{post.owner.email}}</h2>
 <p> <h2>{{post.title}}</h2> - {{post.category_id.name}}</p>  

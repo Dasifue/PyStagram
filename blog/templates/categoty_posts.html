@@ -2,18 +2,8 @@
 
 {% block content %}
 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    {% for category in categories %}
-    <li><a class="dropdown-item" href="{% url 'category_posts' pk=category.pk %}">{{category.name}}</a></li>
-    {% endfor %}
-  </ul>
-</div>
-
 {% for post in posts %}
+
 <div class="card mb-3" style="max-width: 540px;"  data-bs-theme="dark">
     {% if post.image %}
     <div class="row g-0">
@@ -32,6 +22,11 @@
       </div>
     </div>
   </div>
+
+{% empty %}
+
+Нет постов
+
 {% endfor %}
 
 {% endblock %}

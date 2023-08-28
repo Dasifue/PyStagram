@@ -27,7 +27,8 @@ urlpatterns = [
 
     #-----Blog-----
     path('', views.main_page, name="main_page"),
-    path('post/details/<int:pk>', views.post_details, name="post_details")
+    path('post/details/<int:pk>', views.post_details, name="post_details"),
+    path('post/category/<int:pk>', views.get_posts_by_category, name="category_posts")
 ]
 
 if settings.DEBUG:

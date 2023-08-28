@@ -4,10 +4,11 @@ from .models import Post, Category
 
 def main_page(request):
     posts = Post.objects.all()
+    categories = Category.objects.all()
 
     context = {
         "posts": posts,
-        "key": "My name is Emir",
+        "categories": categories,
     }
     return render(request, "index.html", context)
 
@@ -20,5 +21,13 @@ def post_details(request, pk):
     }
     return render(request, "post_details.html", context)
     
+
+def get_posts_by_category(request, pk):
+    posts = Post.objects.filter(category_id=pk)
+
+    context = {
+        "posts": posts
+    }
+    return render(request, "categoty_posts.html", context)
 
 #Hello My group
