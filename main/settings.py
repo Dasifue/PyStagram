@@ -133,3 +133,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 AUTH_USER_MODEL = 'account.User'
 
 # asadmaiwdji
+
+"""
+asdasdasdasdasdasdasdasdasdasdasd
+ashyrhan Loh)))))))
+
+"""
