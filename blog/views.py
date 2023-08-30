@@ -30,4 +30,6 @@ def get_posts_by_category(request, pk):
     }
     return render(request, "categoty_posts.html", context)
 
+
 #Hello My group
+# dsrdtfgyhuijkoplkjhgfd
