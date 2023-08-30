@@ -10,7 +10,7 @@ def main_page(request):
         "posts": posts,
         "categories": categories,
     }
-    return render(request, "index.html", context)
+    return render(request, "base.html", context)
 
 
 def post_details(request, pk):
