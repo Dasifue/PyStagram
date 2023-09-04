@@ -30,21 +30,4 @@ def get_posts_by_category(request, pk):
     }
     return render(request, "categoty_posts.html", context)
 
-# <<<<<<< HEAD
 
-# #Hello My group
-# """
-# hahahhahahahaha
-# hahahahahaha
-# hahahahaha
-
-
-# """
-# =======
-# #Hello My group
-# """
-
-
-
-# hahahahaha"""
-# >>>>>>> 53302c324c4b6e3108db72da9199dac0cf366bcb
