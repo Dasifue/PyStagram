@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="page-wrapper">
+  <!-- Page header -->
+  <div class="page-header d-print-none">
+    <div class="container-xl">
+      <div class="row g-2 align-items-center">
+        <div class="col">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"></h3>
+          <!-- <img src="{{post.image.url}}" alt=""> -->
+          <div class="card" style="width: 18rem;">
+            <img src="{{post.image.url}}" class="card-img-top" alt="...">
+            <!-- <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="datagrid">
+            <div class="datagrid-item">
+              <div class="datagrid-title">Владелец</div>
+              <div class="datagrid-content">{{post.owner}}</div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Название</div>
+              <div class="datagrid-content">{{post.title}}</div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Имя категории</div>
+              <div class="datagrid-content">{{post.category_id}}</div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Дата публикации</div>
+              <div class="datagrid-content">{{post.published}}</div>
+            </div>
+            <div class="datagrid-item">
+              
+              <div class="datagrid-content">
+                
+                </div>
+              </div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Дата обновления</div>
+              <div class="datagrid-content">{{post.updated}}</div>
+              <div class="datagrid-title">Контент</div>
+              <div class="datagrid-content">{{post.content}}</div>
+             
+                            
+{% endblock %}
+

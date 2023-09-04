@@ -593,15 +593,15 @@
 
 
 
-
         <div class="page-body">
             <div class="container-xl">
                 {% block content %}
-                    Default content
+                    {% for post in posts %}
+                      {{ post }}
+                    {% endfor%}
                 {% endblock %}
             </div>
-        </div>
-
+         </div>
 
 
 
