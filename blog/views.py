@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from .models import Post, Category
 
-def main_page(request):
+def posts_list(request):
     posts = Post.objects.all()
     categories = Category.objects.all()
 
@@ -31,3 +31,8 @@ def get_posts_by_category(request, pk):
     return render(request, "categoty_posts.html", context)
 
 #Hello My group
+"""
+
+
+
+hahahahaha"""
