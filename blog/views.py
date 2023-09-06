@@ -10,7 +10,7 @@ def posts_list(request):
         "posts": posts,
         "categories": categories,
     }
-    return render(request, "base.html", context)
+    return render(request, "samples.html", context)
 
 
 def post_details(request, pk):
@@ -29,5 +29,6 @@ def get_posts_by_category(request, pk):
         "posts": posts
     }
     return render(request, "categoty_posts.html", context)
+
 
 
