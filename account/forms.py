@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import User
+from .models import User, UserInfo, University
 
 
 class RegisterForm(forms.ModelForm):
@@ -41,3 +41,43 @@ class LoginForm(forms.ModelForm):
             raise ValidationError({"username": "Такой пользователь не существует!"})
         
         return data
+
+
+
+class UserBaseForm(forms.ModelForm):
+    date_of_birth = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        input_formats=['%Y-%m-%d']
+    )
+    
+
+    class Meta:
+        model = User
+        fields = (
+            "first_name",
+            "last_name",
+            "image",
+            "date_of_birth",
+            "about"
+        )
+
+    
+        
+
+
+class UserInfoForm(forms.ModelForm):
+
+    education = forms.ModelMultipleChoiceField(
+        queryset=University.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
+    )
+    
+    class Meta:
+        model = UserInfo
+        fields = (
+            "education",
+            "work",
+            "address",
+            "country",
+        )
