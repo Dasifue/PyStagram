@@ -1,42 +1,13 @@
-# from django import  forms
-# from django.forms import TextInput, ImageField, DateField, NumberInput, Select
-
-
-# class PostUpdateForm(forms.ModelForm):
-#     class Meta:
-#         fields=(
-#             "owner",
-#             "title",
-#             "image",
-#             "content",
-#             "published",
-#             "updated",
-#             )
-#         widgets={
-#             "owner": forms.TextInput(
-#                 attrs={}
-#             ),
-#             "tittle": forms.TextInput(
-#                 attrs={}
-#             ),
-#             # "image": forms.ImageField(
-#             #     attrs={"class": "custom-image-input"}
-
-            
-#             "content" : forms.TextInput(
-#                 attrs={}
-#             ),
-#             "published": forms.DateField(
-#                 attrs={"type": "date"}
-#             ),
-#             "updated": forms.DateField(
-#                 attrs={"type": "date"}
-#             ),
-#         }
-
-
-    
 from django import forms
+from .models import Post
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']
+        
+        
 
 class PostUpdateForm(forms.ModelForm):
     class Meta:
