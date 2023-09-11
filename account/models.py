@@ -7,6 +7,8 @@ class User(AbstractUser):
     image = models.ImageField("Аватар", upload_to="account/", default="account/default_avatar.png")
     date_of_birth = models.DateField("Дата рождения", null=True)
     about = models.TextField("О себе")
+    favorites = models.ManyToManyField("blog.Post", related_name="favorites", verbose_name="Лайки")
+    followings = models.ManyToManyField("self", related_name="followers", verbose_name="Подписки")
 
     class Meta:
         verbose_name = "Пользователь"
