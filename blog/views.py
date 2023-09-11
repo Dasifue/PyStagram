@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
 from django.shortcuts import  get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 from .models import Post, Category
 from .forms import  PostForm, PostUpdateForm
@@ -18,7 +19,7 @@ def posts_list(request):
 
 
 def post_details(request, pk):
-    post = Post.objects.get(pk=pk)
+    post = get_object_or_404(Post, pk=pk)
 
     context = {
         "post": post
@@ -37,27 +38,31 @@ def get_posts_by_category(request, pk):
 
   
   
-
+@login_required
 def create_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('create_post.html')  
+            post = form.save(commit=False)
+            post.owner = request.user
+            post.save()
+            return redirect('blog:posts_list')
     else:
         form = PostForm()
     return render(request, 'create_post.html', {'form': form})
   
   
-
+@login_required
 def update_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
+    if post.owner.username != request.user.username:
+        return redirect('blog:post_details', pk=post_id)
 
     if request.method == 'POST':
         form = PostUpdateForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('post_detail', post_id=post_id)
+            return redirect('blog:post_details', pk=post_id)
     else:
         form = PostUpdateForm(instance=post)
 

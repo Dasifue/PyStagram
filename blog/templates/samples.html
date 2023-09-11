@@ -7,19 +7,38 @@
 
 <div class="col-md-6 col-lg-3">
   <div class="card">
-    <!-- Photo -->
-    {%if post.image %}
-    <a href="{% url 'blog:post_details' pk=post.pk %}">
-    <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url('{{post.image.url}}')"></div>
-    </a>
-    <!-- <img src="{{post.image.url}}" alt=""> -->
-    {% endif %}
-    <div class="card-body">
-      <h3 class="card-title"><a href="{% url 'blog:post_details' pk=post.pk %}">{{post.title}}</a></h3>
-      <p class="text-muted">{{post.short_content}}</p>
-      {{post.published}}
-      {{post.updated}}
-      {{post.owner}}
+    <div class="card-header">
+      <div>
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <a href="{% url 'account:profile' pk=post.owner.pk %}">
+              <span class="avatar" style="background-image: url({{post.owner.image.url}})"></span>
+            </a>
+          </div>
+          <div class="col">
+            <div class="card-title"><a href="{% url 'account:profile' pk=post.owner.pk %}">{{post.owner.username}}</a></div>
+            {% if post.owner.about.work %}
+            <div class="card-subtitle">{{post.owner.about.work}}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="card">
+        <!-- Photo -->
+        {%if post.image %}
+        <a href="{% url 'blog:post_details' pk=post.pk %}">
+        <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url('{{post.image.url}}')"></div>
+        </a>
+        <!-- <img src="{{post.image.url}}" alt=""> -->
+        {% endif %}
+        <div class="card-body">
+          <h3 class="card-title"><a href="{% url 'blog:post_details' pk=post.pk %}">{{post.title}}</a></h3>
+          <p class="text-muted">{{post.short_content}}</p>
+          <p class="text-muted"><i>{{post.updated}}</i></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

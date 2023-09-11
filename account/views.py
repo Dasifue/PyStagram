@@ -62,7 +62,7 @@ def profile_view(request, pk):
     return render(request, "profile.html", context)
     
 
-# @login_required("login")
+@login_required
 def update_profile_view(request):
     user = request.user
 
