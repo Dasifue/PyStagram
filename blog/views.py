@@ -48,23 +48,3 @@ def update_post(request, post_id):
     return render(request, 'update_post.html', {'form': form, 'post': post})
 
 
-
-        
-# <<<<<<< HEAD
-
-# #Hello My group
-# """
-# hahahhahahahaha
-# hahahahahaha
-# hahahahaha
-
-
-# """
-# =======
-# #Hello My group
-# """
-
-
-
-# hahahahaha"""
-# >>>>>>> 53302c324c4b6e3108db72da9199dac0cf366bcb
