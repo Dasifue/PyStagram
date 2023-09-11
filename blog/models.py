@@ -28,3 +28,8 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Публикация"
         verbose_name_plural = "Публикации"
+
+
+    @property
+    def short_content(self):
+        return f"{self.content[:20]}..."
