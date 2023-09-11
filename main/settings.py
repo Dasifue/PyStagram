@@ -132,12 +132,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 AUTH_USER_MODEL = 'account.User'
 
+LOGIN_URL = "/account/login/"
 
-# asadmaiwdji
-
-"""
-asdasdasdasdasdasdasdasdasdasdasd
-ashyrhan Loh)))))))
-
-=======
-"""

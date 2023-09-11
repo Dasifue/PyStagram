@@ -5,24 +5,28 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = (
+            'title', 
+            'content',
+            'image',
+            'category_id',
+        )
         
         
 
 class PostUpdateForm(forms.ModelForm):
     class Meta:
+        model = Post
         fields = (
-            "owner",
             "title",
+            "category_id",
             "image",
             "content",
-            "published",
-            "updated",
         )
-        widgets = {
-            "owner": forms.TextInput(attrs={}),
-            "title": forms.TextInput(attrs={}),
-            "content": forms.TextInput(attrs={}),
-            "published": forms.DateInput(attrs={'type': 'date'}),
-            "updated": forms.DateInput(attrs={'type': 'date'}),
-        }
+        # widgets = {
+        #     "owner": forms.TextInput(attrs={}),
+        #     "title": forms.TextInput(attrs={}),
+        #     "content": forms.TextInput(attrs={}),
+        #     "published": forms.DateInput(attrs={'type': 'date'}),
+        #     "updated": forms.DateInput(attrs={'type': 'date'}),
+        # }
