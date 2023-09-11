@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
+from django.shortcuts import  get_object_or_404, redirect
+
 from .models import Post, Category
+from .forms import PostUpdateForm
 
 def posts_list(request):
     posts = Post.objects.all()
@@ -30,6 +33,23 @@ def get_posts_by_category(request, pk):
     }
     return render(request, "categoty_posts.html", context)
 
+
+def update_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+
+    if request.method == 'POST':
+        form = PostUpdateForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', post_id=post_id)
+    else:
+        form = PostUpdateForm(instance=post)
+
+    return render(request, 'update_post.html', {'form': form, 'post': post})
+
+
+
+        
 # <<<<<<< HEAD
 
 # #Hello My group
