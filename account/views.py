@@ -90,3 +90,19 @@ def update_profile_view(request):
 
     return render(request, "edit_profile.html", context)
     
+
+
+@login_required
+def follow_unfollow_user(request, user_pk):
+    followings = request.user.followings.all()
+    user = get_object_or_404(User, pk=user_pk)
+
+    if user not in followings:
+        request.user.followings.add(user)
+    else:
+        request.user.followings.remove(user)
+
+    return redirect("account:profile", pk=user.pk)
+    
+    
+    
