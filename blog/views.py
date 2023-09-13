@@ -18,8 +18,8 @@ def posts_list(request):
     return render(request, "samples.html", context)
 
 
-def post_details(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_details(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
 
     context = {
         "post": post
@@ -28,8 +28,8 @@ def post_details(request, pk):
     
     
 
-def get_posts_by_category(request, pk):
-    posts = Post.objects.filter(category_id=pk)
+def get_posts_by_category(request, category_pk):
+    posts = Post.objects.filter(category_id=category_pk)
 
     context = {
         "posts": posts
@@ -53,19 +53,31 @@ def create_post(request):
   
   
 @login_required
-def update_post(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def update_post(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
     if post.owner.username != request.user.username:
-        return redirect('blog:post_details', pk=post_id)
+        return redirect('blog:post_details', pk=post_pk)
 
     if request.method == 'POST':
         form = PostUpdateForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('blog:post_details', pk=post_id)
+            return redirect('blog:post_details', pk=post_pk)
     else:
         form = PostUpdateForm(instance=post)
 
     return render(request, 'update_post.html', {'form': form, 'post': post})
 
 
+
+@login_required  
+def like_unlike_post_view(request, post_pk):
+    user = request.user
+    post: Post = get_object_or_404(Post, pk=post_pk)
+
+    if post not in user.favorites.all():
+        user.favorites.add(post)
+    else:
+        user.favorites.remove(post)
+    
+    return redirect(request.META.get('HTTP_REFERER'))
