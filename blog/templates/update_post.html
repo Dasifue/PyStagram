@@ -6,7 +6,7 @@
     {{ form.as_p }}
     <button type="submit">Сохранить</button>
   </form>
-  <a href="{% url 'blog:post_details' pk=post.id %}">Назад к посту</a>
+  <a href="{% url 'blog:post_details' post_pk=post.id %}">Назад к посту</a>
 {% endblock %}
 
 

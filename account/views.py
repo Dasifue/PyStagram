@@ -93,7 +93,7 @@ def update_profile_view(request):
 
 
 @login_required
-def follow_unfollow_user(request, user_pk):
+def follow_unfollow_user_view(request, user_pk):
     followings = request.user.followings.all()
     user = get_object_or_404(User, pk=user_pk)
 
