@@ -20,10 +20,17 @@ def posts_list(request):
 
 def post_details(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
-
+    user = post.owner
+    info = user.info
     context = {
-        "post": post
+        "user": user,
+        "universities": info.education.all(),
+        "role": info.work,
+        "address": info.address,
+        "country": info.country,
+        "post": post,
     }
+
     return render(request, "post_details.html", context)
     
     

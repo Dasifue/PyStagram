@@ -4,11 +4,11 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     email = models.EmailField("Почта", unique=True)
-    image = models.ImageField("Аватар", upload_to="account/", default="account/default_avatar.png")
-    date_of_birth = models.DateField("Дата рождения", null=True)
-    about = models.TextField("О себе")
-    favorites = models.ManyToManyField("blog.Post", related_name="favorites", verbose_name="Лайки")
-    followings = models.ManyToManyField("self", related_name="followers", verbose_name="Подписки")
+    image = models.ImageField("Аватар", upload_to="account/", default="account/default_avatar.png", blank=True)
+    date_of_birth = models.DateField("Дата рождения", null=True, blank=True)
+    about = models.TextField("О себе", blank=True)
+    favorites = models.ManyToManyField("blog.Post", related_name="favorites", verbose_name="Лайки", blank=True)
+    followings = models.ManyToManyField("self", related_name="followers", verbose_name="Подписки", blank=True)
 
     class Meta:
         verbose_name = "Пользователь"

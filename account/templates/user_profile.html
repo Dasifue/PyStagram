@@ -1,0 +1,64 @@
+{% extends 'profile.html' %}
+{% load static %}
+
+{% block profile_content %}
+
+{% for post in posts %}
+
+<div class="col-md-6 col-lg-3">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="row align-items-center">
+            <div class="col-auto">
+              <a href="{% url 'account:profile' pk=post.owner.pk %}">
+                <span class="avatar" style="background-image: url({{post.owner.image.url}})"></span>
+              </a>
+            </div>
+            <div class="col">
+              <div class="card-title"><a href="{% url 'account:profile' pk=post.owner.pk %}">{{post.owner.username}}</a></div>
+              {% if post.owner.about.work %}
+              <div class="card-subtitle">{{post.owner.about.work}}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="card">
+          <!-- Photo -->
+          {%if post.image %}
+          <a href="{% url 'blog:post_details' post_pk=post.pk %}">
+          <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url('{{post.image.url}}')"></div>
+          </a>
+          <!-- <img src="{{post.image.url}}" alt=""> -->
+            {% endif %}
+            <div class="card-body">
+              <h3 class="card-title"><a href="{% url 'blog:post_details' post_pk=post.pk %}">{{post.title}}</a></h3>
+              <p class="text-muted">{{post.short_content}}</p>
+              <p class="text-muted"><i>{{post.updated}}</i></p>
+              <a href="{% url 'blog:lk_unlk' post_pk=post.pk %}">
+              {% if post in request.user.favorites.all %}
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled" width="30" height="30" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" stroke-width="0" fill="currentColor"></path>
+              </svg>
+            {% else %}
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart" width="30" height="30" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+              </svg>
+            {% endif %}
+            {{post.favorites.count}}
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <br>
+
+{% endfor %}
+
+{% endblock %}
