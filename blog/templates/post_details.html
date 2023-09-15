@@ -80,8 +80,12 @@
               <div class="datagrid-title">Контент</div>
               <div class="datagrid-content">{{post.content}}</div>
              
-
-              
+              <form method="post" action="{% url 'blog:create_comment' post_pk=post.pk  %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Отправить</button>
+            </form>
+            
                             
 {% endblock %}
 
