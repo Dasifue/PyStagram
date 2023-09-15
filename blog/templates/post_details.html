@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-</div>
+
             <div class="datagrid-item">
               <div class="datagrid-title">Имя категории</div>
               <div class="datagrid-content">{{post.category_id}}</div>
@@ -68,11 +68,47 @@
                 </div>
               </div>
             </div>
-            <div class="datagrid-item">
-              <div class="datagrid-title">Дата обновления</div>
-              <div class="datagrid-content">{{post.updated}}</div>
-              <div class="datagrid-title">Контент</div>
-              <div class="datagrid-content">{{post.content}}</div>
+            
+              <!-- <div class="datagrid-title">Контент</div>
+              <div class="datagrid-content">{{post.content}}</div> -->
+
+           
+
+            <div class="col-12">
+              <div class="card" style="height: 28rem">
+                <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                  <div class="divide-y">
+                    
+
+
+                    {% for comment in post.comments.all %}
+                    <div>
+                      <div class="row">
+                        <div class="col-auto">
+                          <span class="avatar" style="background-image: url({{comment.owner.image.url}})"></span>
+                        </div>
+                        
+                        <div class="col">
+                          <strong>{{comment.owner}}</strong>
+                          <div class="text-truncate">
+                          {{comment.text}}
+                          </div>
+                          <div class="text-secondary">{{comment.created}}</div>
+                        </div>
+                        <div class="col-auto align-self-center">
+                          <div class="badge bg-primary"></div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
              
               <form method="post" action="{% url 'blog:create_comment' post_pk=post.pk  %}">
                 {% csrf_token %}
