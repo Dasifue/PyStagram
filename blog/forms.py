@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
@@ -30,3 +30,8 @@ class PostUpdateForm(forms.ModelForm):
         #     "published": forms.DateInput(attrs={'type': 'date'}),
         #     "updated": forms.DateInput(attrs={'type': 'date'}),
         # }
+
+class ComentCreationForm(forms.ModelForm):
+    class Meta:
+        model= Comment
+        fields=("text",)

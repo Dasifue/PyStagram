@@ -4,7 +4,7 @@ from django.shortcuts import  get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Post, Category
-from .forms import  PostForm, PostUpdateForm
+from .forms import  PostForm, PostUpdateForm, ComentCreationForm
 
 
 def posts_list(request):
@@ -22,6 +22,9 @@ def post_details(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
     user = post.owner
     info = user.info
+      
+    form = ComentCreationForm()
+      
     context = {
         "user": user,
         "universities": info.education.all(),
@@ -29,6 +32,7 @@ def post_details(request, post_pk):
         "address": info.address,
         "country": info.country,
         "post": post,
+        "form": form,
     }
 
     return render(request, "post_details.html", context)
@@ -88,3 +92,22 @@ def like_unlike_post_view(request, post_pk):
         user.favorites.remove(post)
     
     return redirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def write_comments(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    if request.method =="POST":
+        form=ComentCreationForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.owner=request.user
+            comment.post_id = post
+            comment.save()
+    return redirect("blog:post_details", post_pk=post.pk)
+
+
+
+
+
+
+

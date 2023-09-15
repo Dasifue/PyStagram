@@ -53,8 +53,32 @@
     </div>
   </div>
 </div>
-
-
+            <div class="datagrid-item">
+              <div class="datagrid-title">Имя категории</div>
+              <div class="datagrid-content">{{post.category_id}}</div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Дата публикации</div>
+              <div class="datagrid-content">{{post.published}}</div>
+            </div>
+            <div class="datagrid-item">
+              
+              <div class="datagrid-content">
+                
+                </div>
+              </div>
+            </div>
+            <div class="datagrid-item">
+              <div class="datagrid-title">Дата обновления</div>
+              <div class="datagrid-content">{{post.updated}}</div>
+              <div class="datagrid-title">Контент</div>
+              <div class="datagrid-content">{{post.content}}</div>
+             
+              <form method="post" action="{% url 'blog:create_comment' post_pk=post.pk  %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Отправить</button>
+            </form>
                             
 {% endblock %}
 
