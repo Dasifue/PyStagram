@@ -52,14 +52,16 @@ def logout_view(request):
 def profile_view(request, pk):
     user = get_object_or_404(User, pk=pk)
     info = user.info
+    posts = user.posts.all()
     context = {
         "user": user,
         "universities": info.education.all(),
         "role": info.work,
         "address": info.address,
         "country": info.country,
+        "posts": posts,
     }
-    return render(request, "profile.html", context)
+    return render(request, "user_profile.html", context)
     
 
 @login_required
