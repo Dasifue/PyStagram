@@ -49,10 +49,10 @@ class Country(models.Model):
 
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="info", verbose_name="Пользователь")
-    education = models.ManyToManyField(University, related_name="info", verbose_name="Образование")
-    work = models.CharField("Должность", max_length=100)
-    address = models.CharField("Адрес", max_length=255)
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, related_name="info", verbose_name="Страна")
+    education = models.ManyToManyField(University, related_name="info", verbose_name="Образование", blank=True)
+    work = models.CharField("Должность", max_length=100, blank=True)
+    address = models.CharField("Адрес", max_length=255, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, related_name="info", verbose_name="Страна", blank=True)
 
     class Meta:
         verbose_name = "Информация о пользователе"

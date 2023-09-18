@@ -88,3 +88,16 @@ def like_unlike_post_view(request, post_pk):
         user.favorites.remove(post)
     
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required  
+def delete_post(request, post_pk):
+    post=get_object_or_404(Post, pk=post_pk)
+    if post.owner.username != request.user.username:
+        return redirect('blog:post_details', post_pk=post_pk)
+    
+    post.delete()
+    return redirect('account:profile', pk=request.user.pk)
+
+
+
