@@ -4,9 +4,11 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     email = models.EmailField("Почта", unique=True)
-    image = models.ImageField("Аватар", upload_to="account/", default="account/default_avatar.png")
-    date_of_birth = models.DateField("Дата рождения", null=True)
-    about = models.TextField("О себе")
+    image = models.ImageField("Аватар", upload_to="account/", default="account/default_avatar.png", blank=True)
+    date_of_birth = models.DateField("Дата рождения", null=True, blank=True)
+    about = models.TextField("О себе", blank=True)
+    favorites = models.ManyToManyField("blog.Post", related_name="favorites", verbose_name="Лайки", blank=True)
+    followings = models.ManyToManyField("self", related_name="followers", verbose_name="Подписки", blank=True)
 
     class Meta:
         verbose_name = "Пользователь"
@@ -47,10 +49,10 @@ class Country(models.Model):
 
 class UserInfo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="info", verbose_name="Пользователь")
-    education = models.ManyToManyField(University, related_name="info", verbose_name="Образование")
-    work = models.CharField("Должность", max_length=100)
-    address = models.CharField("Адрес", max_length=255)
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, related_name="info", verbose_name="Страна")
+    education = models.ManyToManyField(University, related_name="info", verbose_name="Образование", blank=True)
+    work = models.CharField("Должность", max_length=100, blank=True)
+    address = models.CharField("Адрес", max_length=255, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, related_name="info", verbose_name="Страна", blank=True)
 
     class Meta:
         verbose_name = "Информация о пользователе"

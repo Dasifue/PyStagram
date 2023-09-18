@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <body >
+    <div class="page">
+      <div class="page-wrapper">
+        <div class="page-header">
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <span class="avatar avatar-lg rounded" style="background-image: url({{user.image.url}})"></span>
+              </div>
+              <div class="col">
+                <h1 class="fw-bold" style="margin-bottom: 0px;">{{user.username}}</h1>
+                <h3 class="fw-bold" style="margin-bottom: 10px;">{{user.full_name}}</h3>
+                <div class="my-2">Unemployed. Building a $1M solo business while traveling the world. Currently at $400k/yr.
+                </div>
+                <div class="list-inline list-inline-dots text-muted">
+                  <div class="list-inline-item">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/map -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7l6 -3l6 3l6 -3l0 13l-6 3l-6 -3l-6 3l0 -13" /><path d="M9 4l0 13" /><path d="M15 7l0 13" /></svg>
+                    Harbin University of Civil Engineering & Architecture, China
+                  </div>
+                  <div class="list-inline-item">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/mail -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                    <a href="#" class="text-reset">{{user.email}}</a>
+                  </div>
+                  {% if user.date_of_birth %}
+                  <div class="list-inline-item">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/cake -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 20h18v-8a3 3 0 0 0 -3 -3h-12a3 3 0 0 0 -3 3v8z" /><path d="M3 14.803c.312 .135 .654 .204 1 .197a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1c.35 .007 .692 -.062 1 -.197" /><path d="M12 4l1.465 1.638a2 2 0 1 1 -3.015 .099l1.55 -1.737z" /></svg>
+                    {{user.date_of_birth}}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-auto ms-auto">
+                <div class="btn-list">
+                  <a href="#" class="btn btn-icon" aria-label="Button">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/dots -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                  </a>
+                  <a href="#" class="btn btn-icon" aria-label="Button">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/message -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9h8" /><path d="M8 13h6" /><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z" /></svg>
+                  </a>
+                  <a href="{% url 'account:fl_unfl' user_pk=user.pk %}" class="btn btn-primary">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/check -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                    {% if user.username != request.user.username %}
+                      {% if user not in request.user.followings.all %}
+                        Follow
+                      {% else %}
+                        Unfollow
+                      {% endif %}
+                    {% endif %}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="row g-3">
+              <div class="col">
+                {% block profile_content %}
+              
+
+                {% endblock %}
+              </div>
+              <div class="col-lg-4">
+                <div class="row row-cards">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="card-title">Basic info</div>
+                        {% if universities %}
+                        <div class="mb-2">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/book -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6l0 13" /><path d="M12 6l0 13" /><path d="M21 6l0 13" /></svg>
+                          Went to: <strong>
+                            {% for uni in universities %}
+                            {{uni.name}},
+                            {% endfor %}
+                          </strong>
+                        </div>
+                        {% endif %}
+
+                        {% if role %}
+                        <div class="mb-2">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/briefcase -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" /><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" /><path d="M12 12l0 .01" /><path d="M3 13a20 20 0 0 0 18 0" /></svg>
+                          Worked at: <strong>{{role}}</strong>
+                        </div>
+                        {% endif %}
+
+                        {% if address %}
+                        <div class="mb-2">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                          Lives in: <strong>{{address}}</strong>
+                        </div>
+                        {% endif %}
+
+                        {% if country %}
+                        <div class="mb-2">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/map-pin -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
+                          From: <strong><img src="{{ country.flag.url }}" width="20px" height="15px">
+                            {{country.name}}</strong>
+                        </div>
+                        {% endif %}
+
+                        {% if user.date_of_birth %}
+                        <div class="mb-2">
+                          <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
+                          Birth date: <strong>{{user.date_of_birth}}</strong>
+                        </div>
+                        {% endif %}
+                        <div>
+                          <!-- Download SVG icon from http://tabler-icons.io/i/clock -->
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 7v5l3 3" /></svg>
+                          Time zone: <strong id="timezone-info"></strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% if user.about %}
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h2 class="card-title">Обо мне</h2>
+                        <div>
+                          <p>{{user.about}}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    // Получаем часовой пояс браузера
+    var userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Выводим информацию на страницу
+    var timezoneInfoElement = document.getElementById('timezone-info');
+    timezoneInfoElement.textContent = userTimezone;
+</script>
+  {% endblock %}
+

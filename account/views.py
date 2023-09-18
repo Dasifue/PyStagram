@@ -52,17 +52,19 @@ def logout_view(request):
 def profile_view(request, pk):
     user = get_object_or_404(User, pk=pk)
     info = user.info
+    posts = user.posts.all()
     context = {
         "user": user,
         "universities": info.education.all(),
         "role": info.work,
         "address": info.address,
         "country": info.country,
+        "posts": posts,
     }
-    return render(request, "profile.html", context)
+    return render(request, "user_profile.html", context)
     
 
-# @login_required("login")
+@login_required
 def update_profile_view(request):
     user = request.user
 
@@ -89,4 +91,20 @@ def update_profile_view(request):
     }
 
     return render(request, "edit_profile.html", context)
+    
+
+
+@login_required
+def follow_unfollow_user_view(request, user_pk):
+    followings = request.user.followings.all()
+    user = get_object_or_404(User, pk=user_pk)
+
+    if user not in followings:
+        request.user.followings.add(user)
+    else:
+        request.user.followings.remove(user)
+
+    return redirect("account:profile", pk=user.pk)
+    
+    
     
