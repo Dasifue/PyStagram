@@ -55,14 +55,8 @@
     </div>
   </div>
 
-            <div class="datagrid-item">
-              <div class="datagrid-title">Имя категории</div>
-              <div class="datagrid-content">{{post.category_id}}</div>
-            </div>
-            <div class="datagrid-item">
-              <div class="datagrid-title">Дата публикации</div>
-              <div class="datagrid-content">{{post.published}}</div>
-            </div>
+
+     
             <div class="datagrid-item">
               
               <div class="datagrid-content">
@@ -70,9 +64,7 @@
                 </div>
               </div>
             </div>
-            
-              <!-- <div class="datagrid-title">Контент</div>
-              <div class="datagrid-content">{{post.content}}</div> -->
+          
 
            
 
@@ -80,9 +72,6 @@
               <div class="card" style="height: 28rem">
                 <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                   <div class="divide-y">
-                    
-
-
                     {% for comment in post.comments.all %}
                     <div>
                       <div class="row">
