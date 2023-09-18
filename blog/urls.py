@@ -11,5 +11,6 @@ app_name = "blog"
 urlpatterns = [
     path("", posts_list, name="posts_list"),
     path("post/details/<int:pk>", post_details,name="post_details"  ),
+    
 ]
 

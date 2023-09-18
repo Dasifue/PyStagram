@@ -3,8 +3,16 @@ from django.shortcuts import render
 from .models import Post, Category
 
 def posts_list(request):
-    posts = Post.objects.all()
+    search_query = request.GET.get('search' , '')
+    
+    if search_query:
+        posts = Post.objects.filter(title__icontains=search_query)
+    else:
+        posts = Post.objects.all()
+    
     categories = Category.objects.all()
+    
+    
 
     context = {
         "posts": posts,
