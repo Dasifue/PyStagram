@@ -40,7 +40,10 @@
                 </label>
               </div>
               <div class="form-footer">
-                <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                
+                <button type="submit" class="btn btn-primary w-100">Sign in</button> 
+                
+                
               </div>
             </form>
           </div>
@@ -61,7 +64,7 @@
           </div>
         </div>
         <div class="text-center text-muted mt-3">
-          Don't have account yet? <a href="$" tabindex="-1">Sign up</a>
+          Don't have account yet? <a href="{% url 'account:register' %}" tabindex="-1">Sign up</a>
         </div>
       </div>
     </div>
