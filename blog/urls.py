@@ -7,6 +7,7 @@ from .views import (
     get_posts_by_category,
     create_post,
     like_unlike_post_view,
+    delete_post,
     write_comments,
 )
 
@@ -18,6 +19,7 @@ urlpatterns = [
     path("post/create/", create_post, name="create_post"),
     path("post/update/<int:post_pk>",update_post,name="update"),
     path("post/lk_unlk/<int:post_pk>", like_unlike_post_view, name="lk_unlk"),
+    path("post/delete/<int:post_pk>",delete_post,name="delete_post"),
     path("post/comments/create/<int:post_pk>",write_comments,name="create_comment"),
 ]
 
