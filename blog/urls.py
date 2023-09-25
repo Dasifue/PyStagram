@@ -8,6 +8,8 @@ from .views import (
     create_post,
     like_unlike_post_view,
     write_comments,
+    delete_comment,
+    update_comment,
 )
 
 app_name = "blog"
@@ -19,5 +21,7 @@ urlpatterns = [
     path("post/update/<int:post_pk>",update_post,name="update"),
     path("post/lk_unlk/<int:post_pk>", like_unlike_post_view, name="lk_unlk"),
     path("post/comments/create/<int:post_pk>",write_comments,name="create_comment"),
+    path("post/comments/delete/<int:comment_pk>", delete_comment, name="delete_comment"),
+    path("post/comments/update/<int:comment_id>", update_comment, name="update_comment"),
 ]
 
