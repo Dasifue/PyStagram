@@ -55,14 +55,8 @@
     </div>
   </div>
 
-            <div class="datagrid-item">
-              <div class="datagrid-title">Имя категории</div>
-              <div class="datagrid-content">{{post.category_id}}</div>
-            </div>
-            <div class="datagrid-item">
-              <div class="datagrid-title">Дата публикации</div>
-              <div class="datagrid-content">{{post.published}}</div>
-            </div>
+
+     
             <div class="datagrid-item">
               
               <div class="datagrid-content">
@@ -70,9 +64,7 @@
                 </div>
               </div>
             </div>
-            
-              <!-- <div class="datagrid-title">Контент</div>
-              <div class="datagrid-content">{{post.content}}</div> -->
+          
 
            
 
@@ -80,22 +72,23 @@
               <div class="card" style="height: 28rem">
                 <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                   <div class="divide-y">
-                    
-
-
-                    {% for comment in comments %}
                     <div>
                       <div class="row">
                         <div class="col-auto">
                           <span class="avatar" style="background-image: url({{comment.owner.image.url}})"></span>
                         </div>
-                        
                         <div class="col">
                           <strong>{{comment.owner}}</strong>
 
                           <div class="text-truncate">
                           {{comment.text}}
                           </div>
+                           {% if comment.created == comment.updated%}
+                          <div class="text-secondary">Опулбликованно {{comment.created}}</div>
+                          {% else %}
+                          <div class="text-secondary">Обновлено {{comment.updated}}</div>
+                          {% endif %}
+
                           {% for com in comment.answers.all %}
                               <div>
                                 <div class="row">
@@ -112,8 +105,12 @@
                                   
                           
                                     
-                                    <div class="text-secondary">{{com.created}}</div>
-                                  </div>
+                                    {% if com.created == com.updated%}
+                                        <div class="text-secondary">Опулбликованно {{com.created}}</div>
+                                    {% else %}
+                                        <div class="text-secondary">Обновлено {{com.updated}}</div>
+                                    {% endif %}
+                                  
                                   <div class="col-auto align-self-center">
                                     <div class="badge bg-primary"></div>
                                   </div>
@@ -121,12 +118,59 @@
                               </div>
                           {% empty %}
                           {% endfor %}
-                          
-                          
-                          <div class="text-secondary">{{comment.created}}</div>
+
                         </div>
                         <div class="col-auto align-self-center">
                           <div class="badge bg-primary"></div>
+                        </div>
+                      </div>
+                      <div class="col-auto ms-auto">
+                        <div class="btn-list">
+                          <div class="nav-item dropdown">
+                         
+                            <a href="#" class="btn btn-icon" aria-label="Button" data-bs-toggle="dropdown">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/dots -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                              <a href="{% url 'blog:update_comment' comment_id=comment.pk %}" class="btn">
+                                Change comment
+                              </a>
+                              
+                              <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-danger">
+                                Delete comment
+                              </a>                                    
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal modal-blur fade" id="modal-danger" tabindex="1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div class="modal-status bg-danger"></div>
+                          <div class="modal-body text-center py-4">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>
+                            <h3>Are you sure?</h3>
+                            <div class="text-muted">Вы точно хотите удалить комментрий? {{comment.id}}</div>
+                          </div>
+                          <div class="modal-footer">
+                            <div class="w-100">
+                              <div class="row">
+                                <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                                    Cancel
+                                  </a></div>
+                                <div class="col"><a href="{% url 'blog:delete_comment' comment_pk=comment.pk %}" class="btn btn-danger w-100" data-bs-dismiss="modal">
+                                    Delete
+                                  </a></div>
+                                  <a href="{% url 'blog:delete_comment' comment_pk=comment.pk %}" >
+                                    Delete
+                                  </a>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -172,6 +216,5 @@
                 <button type="submit">Отправить</button>
             </form>
 
-                        
 {% endblock %}
 

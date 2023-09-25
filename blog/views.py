@@ -4,7 +4,8 @@ from django.shortcuts import  get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import Post, Category,Comment
-from .forms import  PostForm, PostUpdateForm, ComentCreationForm, AnswerCommentForm
+from .forms import  PostForm, PostUpdateForm, ComentCreationForm, AnswerCommentForm, ComentUpdateForm
+
 
 
 def posts_list(request):
@@ -90,6 +91,16 @@ def update_post(request, post_pk):
     return render(request, 'update_post.html', {'form': form, 'post': post})
 
 
+@login_required  
+def delete_post(request, post_pk):
+    post=get_object_or_404(Post, pk=post_pk)
+    if post.owner.username != request.user.username:
+        return redirect('blog:post_details', post_pk=post_pk)
+    
+    post.delete()
+    return redirect('account:profile', pk=request.user.pk)
+
+
 
 @login_required  
 def like_unlike_post_view(request, post_pk):
@@ -146,4 +157,32 @@ def answer_comment(request, comment_id):
     form = AnswerCommentForm()
     return render(request, "post_details.html", {"form": form, "parent_comment": parent_comment})
 
+
+@login_required
+def delete_comment(request, comment_pk):
+    comment= Comment.objects.get(pk=comment_pk)
+    
+    # if comment.owner.username != request.user.username:
+    #     return redirect(request.META.get('HTTP_REFERER'))
+    
+    comment.delete()
+   
+    return redirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def update_comment(request, comment_id):
+    template_name = 'update_comment.html'
+    comment = get_object_or_404(Comment, id=comment_id)
+    
+    if request.method == "POST":
+        form = ComentUpdateForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+        return redirect('blog:post_details', post_pk=comment.post_id.id)
+        
+             
+    else:
+        form = ComentUpdateForm(instance=comment)
+    
+    return render(request, template_name, {'form': form, 'comment': comment})
 

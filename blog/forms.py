@@ -23,18 +23,13 @@ class PostUpdateForm(forms.ModelForm):
             "image",
             "content",
         )
-        # widgets = {
-        #     "owner": forms.TextInput(attrs={}),
-        #     "title": forms.TextInput(attrs={}),
-        #     "content": forms.TextInput(attrs={}),
-        #     "published": forms.DateInput(attrs={'type': 'date'}),
-        #     "updated": forms.DateInput(attrs={'type': 'date'}),
-        # }
+      
 
 class ComentCreationForm(forms.ModelForm):
     class Meta:
         model= Comment
         fields=("text",)
+
 
 
 class AnswerCommentForm(forms.ModelForm):
@@ -43,6 +38,11 @@ class AnswerCommentForm(forms.ModelForm):
         model = Comment
         fields=(
             "text",
-            "parent",
         )
         
+
+class ComentUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ("text",)
+
