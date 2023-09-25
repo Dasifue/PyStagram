@@ -35,3 +35,14 @@ class ComentCreationForm(forms.ModelForm):
     class Meta:
         model= Comment
         fields=("text",)
+
+
+class AnswerCommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields=(
+            "text",
+            "parent",
+        )
+        

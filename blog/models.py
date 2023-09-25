@@ -41,7 +41,7 @@ class Comment(models.Model):
     text = models.TextField(verbose_name="Текст комментария")
     created = models.DateTimeField(verbose_name="Дата публикации", auto_now_add=True)
     updated = models.DateTimeField(verbose_name="Дата обновления", auto_now=True)
-    parent = models.ForeignKey("self", on_delete=models.CASCADE, verbose_name="Ответ комментарию", null=True, blank=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, verbose_name="Ответ комментарию", related_name="answers", null=True, blank=True)
 
     def __str__(self):
         return f"{self.owner.username} {self.text[:20]}"

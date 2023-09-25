@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.shortcuts import  get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Post, Category
-from .forms import  PostForm, PostUpdateForm, ComentCreationForm
+from .models import Post, Category,Comment
+from .forms import  PostForm, PostUpdateForm, ComentCreationForm, AnswerCommentForm
 
 
 def posts_list(request):
@@ -32,6 +32,7 @@ def post_details(request, post_pk):
     info = user.info
       
     form = ComentCreationForm()
+    comments = Comment.objects.filter(post_id=post_pk, parent=None)
       
     context = {
         "user": user,
@@ -41,6 +42,7 @@ def post_details(request, post_pk):
         "country": info.country,
         "post": post,
         "form": form,
+        "comments": comments,
     }
 
     return render(request, "post_details.html", context)
@@ -127,8 +129,21 @@ def write_comments(request, post_pk):
     return redirect("blog:post_details", post_pk=post.pk)
 
 
-
-
-
+@login_required
+def answer_comment(request, comment_id):
+    parent_comment = get_object_or_404(Comment, pk=comment_id)
+    
+    if request.method == "POST":
+        form = AnswerCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.owner = request.user
+            comment.parent = parent_comment
+            comment.post_id = parent_comment.post_id
+            comment.save()
+            return redirect(request.META.get('HTTP_REFERER'))
+    
+    form = AnswerCommentForm()
+    return render(request, "post_details.html", {"form": form, "parent_comment": parent_comment})
 
 
