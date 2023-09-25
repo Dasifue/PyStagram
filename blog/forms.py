@@ -31,7 +31,18 @@ class ComentCreationForm(forms.ModelForm):
         fields=("text",)
 
 
+
+class AnswerCommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields=(
+            "text",
+        )
+        
+
 class ComentUpdateForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ("text",)
+

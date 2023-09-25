@@ -44,7 +44,7 @@
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
             </svg>
-          {% endif %}
+            {% endif %}
           </a>
           {% for user in post.favorites.all %}
           <span class="avatar avatar-sm rounded" style="background-image: url({{user.image.url}})"></span>
@@ -72,7 +72,6 @@
               <div class="card" style="height: 28rem">
                 <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                   <div class="divide-y">
-                    {% for comment in post.comments.all %}
                     <div>
                       <div class="row">
                         <div class="col-auto">
@@ -80,14 +79,46 @@
                         </div>
                         <div class="col">
                           <strong>{{comment.owner}}</strong>
+
                           <div class="text-truncate">
                           {{comment.text}}
                           </div>
-                          {% if comment.created == comment.updated%}
+                           {% if comment.created == comment.updated%}
                           <div class="text-secondary">Опулбликованно {{comment.created}}</div>
                           {% else %}
                           <div class="text-secondary">Обновлено {{comment.updated}}</div>
                           {% endif %}
+
+                          {% for com in comment.answers.all %}
+                              <div>
+                                <div class="row">
+                                  <div class="col-auto">
+                                    <span class="avatar" style="background-image: url({{com.owner.image.url}})"></span>
+                                  </div>
+                                  
+                                  <div class="col">
+                                    <strong>{{com.owner}}</strong>
+          
+                                    <div class="text-truncate">
+                                    {{com.text}}
+                                    </div>
+                                  
+                          
+                                    
+                                    {% if com.created == com.updated%}
+                                        <div class="text-secondary">Опулбликованно {{com.created}}</div>
+                                    {% else %}
+                                        <div class="text-secondary">Обновлено {{com.updated}}</div>
+                                    {% endif %}
+                                  
+                                  <div class="col-auto align-self-center">
+                                    <div class="badge bg-primary"></div>
+                                  </div>
+                                </div>
+                              </div>
+                          {% empty %}
+                          {% endfor %}
+
                         </div>
                         <div class="col-auto align-self-center">
                           <div class="badge bg-primary"></div>
@@ -143,14 +174,40 @@
                         </div>
                       </div>
                     </div>
-                    {% endfor %}
-
-                    
-                  </div>
-                </div>
-              </div>
+                    <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-team">
+                      ответить
+                    </a>
+      <div class="modal modal-blur fade" id="modal-team" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Answer to comment</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'blog:answer_comment' comment_id=comment.pk %}" method="post">
+              {% csrf_token %}
+            <div>
+              <label class="form-label">Additional info</label>
+              <input type="form-control" name="text" id="">
             </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+            <button type="submit"  class="btn btn-primary" data-bs-dismiss="modal">Sumbit</button>
 
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+                    {% endfor %}
+                    
+                      
+                    
+                    
+                  
 
              
               <form method="post" action="{% url 'blog:create_comment' post_pk=post.pk  %}">
@@ -159,7 +216,5 @@
                 <button type="submit">Отправить</button>
             </form>
 
-           
-                            
 {% endblock %}
 
