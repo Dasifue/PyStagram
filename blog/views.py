@@ -18,7 +18,6 @@ def posts_list(request):
     
     categories = Category.objects.all()
     
-    
 
     context = {
         "posts": posts,
@@ -162,11 +161,10 @@ def answer_comment(request, comment_id):
 def delete_comment(request, comment_pk):
     comment= Comment.objects.get(pk=comment_pk)
     
-    # if comment.owner.username != request.user.username:
-    #     return redirect(request.META.get('HTTP_REFERER'))
+    if comment not in request.user.comments.all():
+        return redirect("blog:post_details", post_pk=comment.post_id.pk)
     
     comment.delete()
-   
     return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required

@@ -8,7 +8,6 @@
 * Copyright 2018-2023 codecalm.net Paweł Kuna
 * Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
 -->
-search
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -167,12 +166,10 @@ search
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <a href="#" class="dropdown-item">Status</a>
-
                 <a href="{%  url 'account:profile' pk=request.user.pk %}" class="dropdown-item">Profile</a>
-                <a href="#" class="dropdown-item">Feedback</a>
+                <a href="{%  url 'account:update' %}" class="dropdown-item">Settings</a>
                 <div class="dropdown-divider"></div>
-                <a href="./settings.html" class="dropdown-item">Settings</a>
+                <a href="{% url 'account:login' %}" class="dropdown-item">Swith account</a>
                 <a href="{% url 'account:logout' %}" class="dropdown-item">Logout</a>
               </div>
             </div>
