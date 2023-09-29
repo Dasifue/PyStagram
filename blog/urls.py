@@ -12,6 +12,9 @@ from .views import (
     answer_comment,
     delete_comment,
     update_comment,
+    sorted_by_like,
+    favorites_view,
+
 )
 
 app_name = "blog"
@@ -27,5 +30,7 @@ urlpatterns = [
     path("post/comments/answer/<int:comment_id>", answer_comment, name="answer_comment"),
     path("post/comments/delete/<int:comment_pk>", delete_comment, name="delete_comment"),
     path("post/comments/update/<int:comment_id>", update_comment, name="update_comment"),
+    path("post_sorted/", sorted_by_like, name="post_sorted"),
+    path("post/favorites",favorites_view,name="favorites" ),
 ]
 

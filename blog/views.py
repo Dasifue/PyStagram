@@ -173,6 +173,7 @@ def delete_comment(request, comment_pk):
 def update_comment(request, comment_id):
     template_name = 'update_comment.html'
     comment = get_object_or_404(Comment, id=comment_id)
+
     
     if request.method == "POST":
         form = ComentUpdateForm(request.POST, instance=comment)
@@ -186,3 +187,14 @@ def update_comment(request, comment_id):
     
     return render(request, template_name, {'form': form, 'comment': comment})
 
+@login_required
+def sorted_by_like(request):
+    posts= Post.objects.all()
+    posts = sorted(posts, key=lambda post: post.rating, reverse=True)
+
+    return render(request,"popular.html", {"posts":posts})
+
+@login_required
+def favorites_view(request):
+    favorites=request.user.favorites.all()
+    return render (request, "favorites.html", {"favorites":favorites})
