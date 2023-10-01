@@ -6,8 +6,11 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Category,Comment
 from .forms import  PostForm, PostUpdateForm, ComentCreationForm, AnswerCommentForm, ComentUpdateForm
 
+from .utils import find_recomendations
 
+from .models import User
 
+@login_required
 def posts_list(request):
     search_query = request.GET.get('search' , '')
     
@@ -186,3 +189,14 @@ def update_comment(request, comment_id):
     
     return render(request, template_name, {'form': form, 'comment': comment})
 
+
+
+def user_likes(request, user_id):
+    user = User.objects.get(id=user_id) 
+    liked_posts = user.favorites.all() 
+    
+    context = {
+        'liked_posts': liked_posts,
+    }
+    
+    return render(request, 'likes.html', context)

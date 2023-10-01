@@ -1,4 +1,5 @@
 from django.urls import path
+from . import views
 
 from .views import (
     posts_list,
@@ -27,5 +28,6 @@ urlpatterns = [
     path("post/comments/answer/<int:comment_id>", answer_comment, name="answer_comment"),
     path("post/comments/delete/<int:comment_pk>", delete_comment, name="delete_comment"),
     path("post/comments/update/<int:comment_id>", update_comment, name="update_comment"),
+    path('user/<int:user_id>/likes/', views.user_likes, name='user_likes'),
 ]
 
