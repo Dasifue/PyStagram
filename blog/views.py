@@ -21,7 +21,6 @@ def posts_list(request):
     
     categories = Category.objects.all()
     
-    
 
     context = {
         "posts": posts,
@@ -165,17 +164,17 @@ def answer_comment(request, comment_id):
 def delete_comment(request, comment_pk):
     comment= Comment.objects.get(pk=comment_pk)
     
-    # if comment.owner.username != request.user.username:
-    #     return redirect(request.META.get('HTTP_REFERER'))
+    if comment not in request.user.comments.all():
+        return redirect("blog:post_details", post_pk=comment.post_id.pk)
     
     comment.delete()
-   
     return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def update_comment(request, comment_id):
     template_name = 'update_comment.html'
     comment = get_object_or_404(Comment, id=comment_id)
+
     
     if request.method == "POST":
         form = ComentUpdateForm(request.POST, instance=comment)
@@ -191,6 +190,7 @@ def update_comment(request, comment_id):
 
 
 
+
 def user_likes(request, user_id):
     user = User.objects.get(id=user_id) 
     liked_posts = user.favorites.all() 
@@ -200,3 +200,16 @@ def user_likes(request, user_id):
     }
     
     return render(request, 'likes.html', context)
+
+@login_required
+def sorted_by_like(request):
+    posts= Post.objects.all()
+    posts = sorted(posts, key=lambda post: post.rating, reverse=True)
+
+    return render(request,"popular.html", {"posts":posts})
+
+@login_required
+def favorites_view(request):
+    favorites=request.user.favorites.all()
+    return render (request, "favorites.html", {"favorites":favorites})
+
