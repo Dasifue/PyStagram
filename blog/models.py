@@ -34,7 +34,13 @@ class Post(models.Model):
     def short_content(self):
         return f"{self.content[:20]}..."
     
-
+    
+    @property
+    def rating(self) -> int:
+        likes = self.favorites.all().count() 
+        comments = self.comments.all().count() * 3
+        return likes + comments
+    
 class Comment(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments", verbose_name="Комментарии")
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments", verbose_name="Публикация")

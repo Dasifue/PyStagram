@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сетка постов</title>
+    <style>
+        /* Основные стили для сетки */
+        .post-grid {
+            display: flex; /* Используем flex-контейнер для горизонтального отображения постов */
+            flex-wrap: wrap; /* Разрешаем перенос постов на следующую строку, если не помещаются */
+            gap: 10px; /* Промежуток между постами (уменьшено с 20px на 10px) */
+        }
+    
+        /* Стили для постов */
+        .post {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 300px; /* Устанавливаем максимальную ширину для каждого поста */
+            flex: 1; /* Распределяем доступное пространство равномерно между постами */
+            margin: 0 5px; /* Добавляем отступы по бокам для промежутка между постами */
+            text-align: left; /* Выравниваем текст слева */
+        }
+    
+        /* Стили для изображения */
+        .post-image {
+            max-width: 100%; /* Изображение подстраивается по ширине карточки */
+            height: auto; /* Сохраняет соотношение сторон изображения */
+        }
+    
+        /* Стили для текста и остального контента */
+        .post-content {
+            padding: 10px; /* Внутренний отступ контента */
+        }
+    
+        /* Заголовок поста */
+        .post-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    
+        .post-description {
+            font-size: 14px;
+        }
+   
+    </style>
+</head>
+<body>
+    <div class="post-grid">
+        {% for post in posts %}
+        <div class="post">
+            <div class="card">
+                {% if post.image %}
+                <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url({{post.image.url}})"></div>
+                {% endif %}
+                <div class="card-header">
+                    <h3 class="card-title">{{post.title}}</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text">{{post.content}}</p>
+                    {% if post.category_id %}
+                    <p class="text-muted">{{post.category_id.name}}</p>
+                    {% endif %}
+
+                    {% if post.published != post.updated %}
+                    <p class="text-muted">В последний раз обновлено {{post.updated}}</p>
+                    {% else %}
+                    <p class="text-muted">Опубликовано {{post.published}}</p>
+                    {% endif %}
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer">
+                    <!-- Здесь можете добавить дополнительные элементы футера поста -->
+                </div>
+            </div>
+        </div>
+        {% empty %}
+         пока нет публикации
+        {% endfor %}
+    </div>
+</body>
+{% endblock %}
+
+
+
