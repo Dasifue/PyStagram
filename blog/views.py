@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.shortcuts import  get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 from .models import Post, Category,Comment
 from .forms import  PostForm, PostUpdateForm, ComentCreationForm, AnswerCommentForm, ComentUpdateForm
@@ -12,21 +13,22 @@ from .models import User
 
 @login_required
 def posts_list(request):
-    search_query = request.GET.get('search' , '')
     
-    if search_query:
-        posts = Post.objects.filter(title__icontains=search_query)
-    else:
-        posts = Post.objects.all()
-    
+    posts = Post.objects.filter(owner__in=request.user.followings.all()).order_by("-published")
     categories = Category.objects.all()
-    
+    paginator = Paginator(posts, 10)
+
+    page = request.GET.get("page")
+    page_obj = paginator.get_page(page)
+
+    recomendations = find_recomendations(request.user)
 
     context = {
-        "posts": posts,
+        "page_obj": page_obj,
         "categories": categories,
+        "recomendations": recomendations
     }
-    return render(request, "samples.html", context)
+    return render(request, "index.html", context)
 
 
 def post_details(request, post_pk):
@@ -190,26 +192,37 @@ def update_comment(request, comment_id):
 
 
 
+def popular_posts_view(request):
 
-def user_likes(request, user_id):
-    user = User.objects.get(id=user_id) 
-    liked_posts = user.favorites.all() 
-    
-    context = {
-        'liked_posts': liked_posts,
-    }
-    
-    return render(request, 'likes.html', context)
+    category = request.GET.get("category")
+    search = request.GET.get("search")
 
-@login_required
-def sorted_by_like(request):
-    posts= Post.objects.all()
+    if category and search:
+        posts = Post.objects.filter(category_id=category, title__icontains=search)
+    elif category:
+        posts = Post.objects.filter(category_id=category)
+    elif search:
+        posts = Post.objects.filter(title__icontains=search)
+    else:
+        posts = Post.objects.all()
+
+    
     posts = sorted(posts, key=lambda post: post.rating, reverse=True)
 
-    return render(request,"popular.html", {"posts":posts})
+    paginator = Paginator(posts, 10)
+    page = request.GET.get("page")
+    page_obj = paginator.get_page(page)
+
+    categories = Category.objects.all()
+    return render(request,"popular.html", {"page_obj":page_obj, "categories": categories})
 
 @login_required
 def favorites_view(request):
     favorites=request.user.favorites.all()
-    return render (request, "favorites.html", {"favorites":favorites})
+
+    paginator = Paginator(favorites, 10)
+    page = request.GET.get("page")
+    page_obj = paginator.get_page(page)
+
+    return render (request, "favorites.html", {"page_obj":page_obj})
 
